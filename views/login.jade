@@ -1,0 +1,13 @@
+h1 Login
+p Welcome to Coffee Base login page.
+
+form(method='POST', action='/login')
+  | Email
+  br
+  input(type='text', name='user[email]', id='email')
+  br
+  | Password
+  br
+  input(type='password', name='user[password]', id='password')
+  p
+  input(type='submit', name='submit', id='submit')

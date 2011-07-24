@@ -1,0 +1,11 @@
+Coffee Base
+
+A very simple node.js app using 
+
+coffeescript
+stylus
+express
+mongoose 
+
+with basic authentication/flash messages.
+

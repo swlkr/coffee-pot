@@ -1,0 +1,17 @@
+h1 Sign Up
+p Welcome to Coffee Base sign up page.
+
+form(method='POST', action='/signup')
+  | Email
+  br
+  input(type='text', name='user[email]', id='email')
+  br
+  | Username
+  br
+  input(type='text', name='user[username]', id='username')
+  br
+  | Password
+  br
+  input(type='password', name='user[password]', id='password')
+  p
+  input(type='submit', name='submit', id='submit')
