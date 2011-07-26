@@ -12,7 +12,7 @@ app = module.exports = express.createServer()
 
 # Configuration
 
-helpers = require './helpers.js'
+helpers = require './helpers.coffee'
 app.helpers helpers.helpers
 app.dynamicHelpers helpers.dynamicHelpers
 
@@ -124,7 +124,7 @@ app.get '/signup', getCurrentUser, (req, res) ->
 app.post '/signup', (req, res) ->
   if not req.body.user
     res.render '/signup'
-  
+
   user = new User req.body.user
   user.save (response) ->
     if not response
@@ -134,11 +134,11 @@ app.post '/signup', (req, res) ->
         res.cookie 'logintoken', loginToken.cookieValue, { expires: (new Date Date.now() + 2 * 604800000), path: '/' }
         res.redirect '/'
       return
-    
+
     if response
       if response.errors and response.errors.email
         req.flash 'error', 'Something is up with that email address'
-        
+
       if response.errors and response.errors.username
         req.flash 'error', 'Something is also up with that username'
 
@@ -175,9 +175,7 @@ app.post '/login', (req, res) ->
           res.redirect '/'
       else
         req.flash 'error', 'Your username or password is incorrect.'
-        options.locals.title = 'Log In | Coffee Base'
-        res.render 'login', options
-     
+        res.redirect 'login'
 
 # Logout
 app.get '/logout', userRequired, (req, res) ->
@@ -186,7 +184,7 @@ app.get '/logout', userRequired, (req, res) ->
     res.clearCookie 'logintoken'
     req.session.destroy ->
     options.locals.username = null
-    
+
   res.redirect '/'
     
 app.get '/404', (req, res) ->
