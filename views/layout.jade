@@ -3,7 +3,9 @@ html
   head
     title= title
     link(rel='stylesheet', href='/css/style.css')
-    src(style='text/javascript', src='/js/coffee_base.js')
+    script(type='text/javascript', src='/js/jquery-1.6.2.min.js')
+    script(type='text/javascript', src='/js/index.js')
   body
     !{flashMessages}
+    .notifications
     != body

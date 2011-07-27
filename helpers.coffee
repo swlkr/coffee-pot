@@ -1,5 +1,5 @@
 exports.helpers = {
-  appName: 'Coffee Base',
+  appName: 'Coffee Pot',
   version: '0.1',
   nameAndVersion: (name, version) ->
     return name + ' v' + version

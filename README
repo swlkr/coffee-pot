@@ -1,11 +1,20 @@
-Coffee Base
+Coffee Pot
 
 A very simple node.js app using 
 
 coffeescript
 stylus
 express
-mongoose 
+mongoose
+jade
+bcrypt
+connect-mongodb
 
-with basic authentication/flash messages.
+Features
+
+Authentication using bcrypt to salt and hash passwords
+Flash (express's req.flash) messages
+
+
+
 
