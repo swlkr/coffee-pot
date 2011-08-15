@@ -1,4 +1,3 @@
-
 # Module dependencies.
 express = require 'express'
 User = require './models/User'
@@ -87,37 +86,17 @@ userRequired = (req, res, next) ->
     res.locals options
     res.redirect '/login'
 
-getCurrentUser = (req, res, next) ->
-  if req.session and req.session.user_id
-    User.findById req.session.user_id, (err, user) ->
-      if user
-        options.locals.username = user.username
-        res.locals options
-        req.currentUser = user
-        next()
-      else
-        next()
-  else if req.cookies and req.cookies.logintoken
-    authenticateFromLoginToken req, res, next
-  else
-    next()
-
 # Routes
 
 # Index
 app.get '/', userRequired, (req, res) ->
   # render the app
   options.locals.title = 'Coffee Pot'
-  options.locals.scripts[0] = 'coffee_base.js'
+  options.locals.scripts[0] = 'index.js'
   res.render 'index', options 
     
 # Sign Up
-app.get '/signup', getCurrentUser, (req, res) ->
-
-  if req.currentUser
-    res.redirect '/'
-    return
-
+app.get '/signup', (req, res) ->
   options.locals.title = 'Sign Up | Coffee Pot'
   res.render 'signup', options
 
@@ -154,12 +133,9 @@ app.post '/signup', (req, res) ->
       res.redirect 'signup'
 
 # Login
-app.get '/login', getCurrentUser, (req, res) ->
-  if req.currentUser
-    res.redirect '/'
-  else
-    options.locals.title = 'Login | Coffee Pot'
-    res.render 'login', options
+app.get '/login', (req, res) ->
+  options.locals.title = 'Login | Coffee Pot'
+  res.render 'login', options
 
 app.post '/login', (req, res) ->
   if not req.body.user
@@ -194,5 +170,5 @@ app.get '/404', (req, res) ->
 process.on 'uncaughtException', (err) ->
   console.log 'Caught exception: ' + err
 
-app.listen 3000
+app.listen 3100
 console.log "Express server listening on port %d in %s mode", app.address().port, app.settings.env
