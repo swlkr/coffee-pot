@@ -44,7 +44,8 @@ options = {
   locals : {
     title : 'Coffee Pot',
     scripts : [],
-    username : null
+    username : null,
+    userID: null,
   },
   layout : 'layout'
 }
@@ -87,23 +88,6 @@ userRequired = (req, res, next) ->
     res.locals options
     res.redirect '/login'
 
-getCurrentUser = (req, res, next) ->
-  if req.session and req.session.user_id
-    User.findById req.session.user_id, (err, user) ->
-      if user
-        options.locals.username = user.username
-        res.locals options
-        req.currentUser = user
-        next()
-      else
-        next()
-  else if req.cookies and req.cookies.logintoken
-    authenticateFromLoginToken req, res, next
-  else
-    next()
-
-# Routes
-
 # Index
 app.get '/', userRequired, (req, res) ->
   # render the app
@@ -112,7 +96,7 @@ app.get '/', userRequired, (req, res) ->
   res.render 'index', options 
     
 # Sign Up
-app.get '/signup', getCurrentUser, (req, res) ->
+app.get '/signup', (req, res) ->
 
   if req.currentUser
     res.redirect '/'
@@ -154,7 +138,7 @@ app.post '/signup', (req, res) ->
       res.redirect 'signup'
 
 # Login
-app.get '/login', getCurrentUser, (req, res) ->
+app.get '/login', (req, res) ->
   if req.currentUser
     res.redirect '/'
   else
