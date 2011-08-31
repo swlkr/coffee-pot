@@ -9,8 +9,6 @@ mongoStore = require 'connect-mongodb'
 
 app = module.exports = express.createServer()
 
-io = require('socket.io').listen(app)
-
 # Configuration
 
 helpers = require './helpers.coffee'
@@ -33,6 +31,7 @@ app.configure = ->
   app.use stylus.middleware { src: __dirname + '/public' }
   app.use app.router
   app.use express.static __dirname + '/public'
+  app.use express.favicon __dirname + '/public/img/favicon.ico'
   
 app.configure 'development', ->
   app.use express.errorHandler { dumpExceptions: true, showStack: true }
@@ -175,19 +174,6 @@ app.get '/logout', userRequired, (req, res) ->
     options.locals.username = null
 
   res.redirect '/'
-  
-#######-----------
-####### Socket IO
-#######-----------
-
-io.sockets.on 'connection', (socket) ->
-  socket.emit 'news', { hello: 'world' }
-  
-  socket.on 'my other event', (data) ->
-    console.log data
-
-  socket.on 'emit click', (data) ->
-    socket.broadcast.emit 'emit response', { emit: 'was clicked' }
     
 app.get '/404', (req, res) ->
   options.locals.title = 'Not Found! | Coffee Pot'

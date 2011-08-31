@@ -5,7 +5,7 @@
 #    */
 
 mongoose = require 'mongoose'
-db = mongoose.connect 'mongodb://localhost/stackspring'
+db = mongoose.connect 'mongodb://localhost/coffeepot'
 
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
