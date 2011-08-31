@@ -1,21 +1,17 @@
 Coffee Pot
-
-A very simple node.js app using 
-
-coffeescript
-stylus
-express
-mongoose
-jade
-bcrypt
-connect
-connect-mongodb
-
-Features
-
-Authentication using bcrypt to salt and hash passwords
-Flash (express's req.flash) messages
+====================
+A boilerplate node.js app.
+---------------------
 
 
-
-
+### Dependencies
+- node.js
+- npm
+- coffeescript
+- stylus
+- express
+- mongoose
+- jade
+- bcrypt
+- connect
+- connect-mongodb

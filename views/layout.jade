@@ -3,9 +3,10 @@ html
   head
     title= title
     link(rel='stylesheet', href='/css/style.css')
-    script(type='text/javascript', src='http://code.jquery.com/jquery.min.js')
-    script(type='text/javascript', src='/js/index.js')
   body
     !{flashMessages}
     .notifications
     != body
+  script(type='text/javascript', src='http://code.jquery.com/jquery.min.js')
+  script(type='text/javascript', src="/socket.io/socket.io.js")
+  script(type='text/javascript', src='/js/index.js')

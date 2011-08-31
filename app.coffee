@@ -9,6 +9,8 @@ mongoStore = require 'connect-mongodb'
 
 app = module.exports = express.createServer()
 
+io = require('socket.io').listen(app)
+
 # Configuration
 
 helpers = require './helpers.coffee'
@@ -86,6 +88,10 @@ userRequired = (req, res, next) ->
   else
     res.locals options
     res.redirect '/login'
+    
+######------------------
+##### Routes
+#####-------------------
 
 # Index
 app.get '/', userRequired, (req, res) ->
@@ -169,6 +175,19 @@ app.get '/logout', userRequired, (req, res) ->
     options.locals.username = null
 
   res.redirect '/'
+  
+#######-----------
+####### Socket IO
+#######-----------
+
+io.sockets.on 'connection', (socket) ->
+  socket.emit 'news', { hello: 'world' }
+  
+  socket.on 'my other event', (data) ->
+    console.log data
+
+  socket.on 'emit click', (data) ->
+    socket.broadcast.emit 'emit response', { emit: 'was clicked' }
     
 app.get '/404', (req, res) ->
   options.locals.title = 'Not Found! | Coffee Pot'
