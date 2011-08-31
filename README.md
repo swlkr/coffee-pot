@@ -15,3 +15,4 @@ A boilerplate node.js app.
 - bcrypt
 - connect
 - connect-mongodb
+- socket.io
