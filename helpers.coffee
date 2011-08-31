@@ -17,7 +17,7 @@ String::startsWith = (str) ->
 String::contains = (str) ->
   this.indexOf(str) not -1
 
-String::uppify = (str) ->
+Uppify = (str) ->
   if str == null or str.length == 0
     return
   
