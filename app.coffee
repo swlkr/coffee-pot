@@ -3,7 +3,7 @@ express = require 'express'
 User = require './models/User'
 LoginToken = require './models/LoginToken'
 mongoose = require 'mongoose'
-db = mongoose.connect 'mongodb://localhost/db'
+db = mongoose.connect 'mongodb://localhost/coffeepot'
 connect = require 'connect'
 mongoStore = require 'connect-mongodb'
 
@@ -50,6 +50,10 @@ options = {
   layout : 'layout'
 }
 
+# Authenticates from a cookie
+# req - request
+# res - response
+# next is a holder variable for moving on to the next callback in the chain
 authenticateFromLoginToken = (req, res, next) ->
   cookie = JSON.parse req.cookies.logintoken 
   json = { email: cookie.email, series: cookie.series, token: cookie.token }
@@ -72,6 +76,10 @@ authenticateFromLoginToken = (req, res, next) ->
           res.cookie 'logintoken', loginToken.cookieValue, { expires: (new Date Date.now() + 2 * 604800000), path: '/' }
           next()
 
+# Middleware for user authentication
+# req - request
+# res - response
+# next is a holder variable for moving on to the next callback in the chain
 userRequired = (req, res, next) ->
   if req.session and req.session.user_id
     User.findById req.session.user_id, (err, user) ->
@@ -93,10 +101,11 @@ userRequired = (req, res, next) ->
 #####-------------------
 
 # Index
+# The starting point for the application
 app.get '/', userRequired, (req, res) ->
   # render the app
   options.locals.title = 'Coffee Pot'
-  options.locals.scripts[0] = 'index.js'
+  options.locals.scripts[0] = 'application.js'
   res.render 'index', options 
     
 # Sign Up
