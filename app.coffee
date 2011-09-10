@@ -172,7 +172,7 @@ app.post '/login', (req, res) ->
           res.redirect '/'
       else
         req.flash 'error', 'Your username or password is incorrect.'
-        res.redirect 'login'
+        res.redirect '/login'
 
 # Logout
 app.get '/logout', userRequired, (req, res) ->
