@@ -15,7 +15,7 @@ A boilerplate coffescript app.
 2. [Install mongodb](http://shiftcommathree.com/articles/how-to-install-mongodb-on-os-x)
 3. Install coffeescript:  
 
-		`npm install coffeescript -g`
+		npm install coffeescript -g
 				
 4. Clone this project and get the dependencies:  
 
