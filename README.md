@@ -1,17 +1,12 @@
 Coffee Pot
 ====================
-A boilerplate coffescript app.
----------------------
 
-## Cool Cutting Edge Technology Used In This Boilerplate App
+### A boilerplate coffescript app using node.js, coffeescript and mongodb
+____________________
 
-- node.js
-- coffeescript
-- mongodb
+#### Start Using Me In 5 Easy Steps!
 
-### How To Use This Boilerplate Template
-
-1. [Install node.js & npm first](https://gist.github.com/579814)
+1. [Install node.js & npm](https://gist.github.com/579814)
 2. [Install mongodb](http://shiftcommathree.com/articles/how-to-install-mongodb-on-os-x)
 3. Install coffeescript:  
 
@@ -19,7 +14,8 @@ A boilerplate coffescript app.
 				
 4. Clone this project and get the dependencies:  
 
-		git clone git://github.com/swlkr/Coffee-Pot
+		cd ~/Downloads
+		git clone git@github.com:swlkr/Coffee-Pot.git
 		cd ~/Downloads/Coffee-Pot
 		npm install
 		coffee app.coffee
