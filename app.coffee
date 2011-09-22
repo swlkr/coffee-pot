@@ -42,10 +42,8 @@ app.configure 'production', ->
 # Global variables
 options = {
   locals : {
-    title : 'Coffee Pot',
-    scripts : [],
-    username : null,
-    userID: null,
+    username: null,
+    scripts : []
   },
   layout : 'layout'
 }
@@ -104,7 +102,6 @@ userRequired = (req, res, next) ->
 # The starting point for the application
 app.get '/', userRequired, (req, res) ->
   # render the app
-  options.locals.title = 'Coffee Pot'
   options.locals.scripts[0] = 'application.js'
   res.render 'index', options 
     
@@ -114,7 +111,6 @@ app.get '/signup', (req, res) ->
     res.redirect '/'
     return
 
-  options.locals.title = 'Sign Up | Coffee Pot'
   res.render 'signup', options
 
 app.post '/signup', (req, res) ->
@@ -155,7 +151,6 @@ app.get '/login', (req, res) ->
     res.redirect '/'
     return
     
-  options.locals.title = 'Login | Coffee Pot'
   res.render 'login', options
 
 app.post '/login', (req, res) ->
@@ -185,7 +180,6 @@ app.get '/logout', userRequired, (req, res) ->
   res.redirect '/'
     
 app.get '/404', (req, res) ->
-  options.locals.title = 'Not Found! | Coffee Pot'
   res.render '404', options
     
 process.on 'uncaughtException', (err) ->
