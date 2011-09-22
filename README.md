@@ -22,5 +22,5 @@ ____________________
 				
 5. Navigate to localhost:3100 in your web browser of choice:
 
-		open localhost:3100
+		open http://localhost:3100
 		
