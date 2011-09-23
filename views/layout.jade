@@ -5,9 +5,8 @@ html
     link(rel='stylesheet', href='/css/style.css')
   body
     .notifications
-      !{flashMessages}
+    #content
     != body
   script(type='text/javascript', src='http://code.jquery.com/jquery-1.6.3.min.js')
-  - if( scripts != null && scripts.length > 0 ) 
-    - each script in scripts 
-      script(type='text/javascript', src='/js/' + script)
+  script(type='text/javascript', src='/js/underscore-1.1.7.min.js')
+  script(type='text/javascript', src='/js/spa.js')

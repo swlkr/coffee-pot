@@ -12,3 +12,9 @@ a {
 a:hover {
   text-decoration: none;
 }
+.Error {
+  color: #f00;
+}
+.Success {
+  color: #0f0;
+}
