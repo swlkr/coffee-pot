@@ -185,5 +185,5 @@ app.get '/404', (req, res) ->
 process.on 'uncaughtException', (err) ->
   console.log 'Caught exception: ' + err
 
-app.listen 3100
+app.listen 3000
 console.log "Express server listening on port %d in %s mode", app.address().port, app.settings.env
