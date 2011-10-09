@@ -1,6 +1,6 @@
 exports.helpers =
   appName: 'Coffee Pot',
-  version: '0.5',
+  version: '1.0',
   nameAndVersion: (name, version) ->
     return name + ' v' + version
   uppify: (str) ->

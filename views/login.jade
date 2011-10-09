@@ -1,0 +1,12 @@
+h1 Sign In
+p Welcome to the #{appName} sign in page.
+
+p Don't have an account? 
+  a(href='/signup') Make one!
+
+form(method='POST', action='/login')
+  input(type='text', name='user[email]', id='email', placeholder='Email')
+  br
+  input(type='password', name='user[password]', id='password', placeholder='Password')
+  p
+  input(type='submit', name='submit', id='submit', value='Sign In')

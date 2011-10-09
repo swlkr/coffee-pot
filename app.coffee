@@ -24,7 +24,7 @@ app.configure = ->
   app.use express.bodyParser()
   app.use express.cookieParser()
   tmpStore = mongoStore mongoStoreConnectionArgs()
-  tmp = { store: tmpStore, secret: 'Coffee Pot' }
+  tmp = { store: tmpStore, secret: 'coffeepot' }
   app.use express.session tmp
   app.use express.methodOverride()
   stylus = require 'stylus'
