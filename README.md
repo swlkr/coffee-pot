@@ -20,7 +20,7 @@ ____________________
 		npm install
 		coffee app.coffee
 				
-5. Navigate to localhost:3100 in your web browser of choice:
+5. Navigate to localhost:3000 in your web browser of choice:
 
-		open http://localhost:3100
+		open http://localhost:3000
 		

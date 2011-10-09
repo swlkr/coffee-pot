@@ -8,10 +8,8 @@ html
       #logo
         h1 #{appName}
       #nav
-        a(href='/signin') 
-          button Sign In
-        a(href='/signup')
-          button Sign Up
+        a(href='/signout')
+          button Sign Out
     .clear
     #content
       .notifications
@@ -24,4 +22,3 @@ html
   - if( scripts != null && scripts.length > 0 ) 
     - each script in scripts 
       script(type='text/javascript', src='/js/' + script)
-    

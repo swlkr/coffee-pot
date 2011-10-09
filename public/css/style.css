@@ -1,20 +1,125 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+/* Variables
+------------------------------------- */
+/* HTML, BODY
+------------------------------------- */
+html {
+  font-size: 100%;
+  overflow-y: scroll;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  background-color: #fefefe;
 }
+body {
+  margin: 0;
+  line-height: 1.231;
+  margin-left: 5px;
+}
+body,
+button,
+input,
+select,
+textarea {
+  font: 16px "Lucida Grande", Helvetica, sans-serif;
+}
+::-moz-selection {
+  color: #fff;
+  text-shadow: none;
+}
+::selection {
+  color: #fff;
+  text-shadow: none;
+}
+/* Header
+-------------------------------------- */
+header #nav {
+  float: right;
+}
+header #nav a:visited,
+header #nav a:hover,
+header #nav a {
+  color: #fefefe;
+}
+header #nav button {
+  cursor: pointer;
+}
+header #logo {
+  float: left;
+}
+header #logo h1 {
+  margin: 0;
+  padding: 0;
+}
+/* Forms
+-------------------------------------- */
+form {
+  width: 275px;
+}
+input[type="text"],
+input[type="password"],
+textarea {
+  border-radius: 3px;
+  border: 1px solid #777;
+  width: 250px;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  -moz-box-shadow: inset 0 0 2px #777;
+  -webkit-box-shadow: inset 0 0 2px #777;
+  box-shadow: inset 0 0 2px #777;
+}
+button,
+input[type="submit"] {
+  border-radius: 3px;
+  background-color: #447bd4;
+  border: 1px solid #447bd4;
+  color: #fff;
+  padding: 10px;
+  cursor: pointer;
+}
+#signin-button {
+  float: right;
+}
+#signup-button {
+  float: right;
+}
+/* Links
+-------------------------------------- */
+a {
+  color: #00f;
+  text-decoration: none;
+}
+a:visited {
+  color: #551a8b;
+}
+a:hover {
+  color: #06e;
+}
+a:focus {
+  outline: thin dotted;
+}
+a:hover,
+a:active {
+  outline: 0;
+}
+/* Lists
+-------------------------------------- */
 li {
   list-style-type: none;
 }
-a {
-  color: #00b7ff;
-  text-decoration: none;
+ul {
+  margin-left: 0;
+  padding-left: 0;
 }
-a:hover {
-  text-decoration: none;
-}
+/* Notifications
+----------------------------------------- */
 .Error {
   color: #f00;
 }
 .Success {
   color: #0f0;
+}
+/* CSS Oddities
+----------------------------------------- */
+.clear {
+  clear: both;
 }
