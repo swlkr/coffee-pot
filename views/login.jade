@@ -5,12 +5,8 @@ p Don't have an account?
   a(href='/signup') Create one!
 
 form(method='POST', action='/login')
-  | Email
+  input(type='text', name='user[email]', id='email', placeholder='Email')
   br
-  input(type='text', name='user[email]', id='email')
-  br
-  | Password
-  br
-  input(type='password', name='user[password]', id='password')
+  input(type='password', name='user[password]', id='password', placeholder='Password')
   p
-  input(type='submit', name='submit', id='submit')
+  input(type='submit', name='submit', id='submit', value='Sign In')

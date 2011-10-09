@@ -2,16 +2,10 @@ h1 Sign Up
 p Welcome to #{appName} sign up page.
 
 form(method='POST', action='/signup')
-  | Email
+  input(type='text', name='user[email]', id='email', placeholder='Email')
   br
-  input(type='text', name='user[email]', id='email')
+  input(type='text', name='user[username]', id='username', placeholder='Username')
   br
-  | Username
-  br
-  input(type='text', name='user[username]', id='username')
-  br
-  | Password
-  br
-  input(type='password', name='user[password]', id='password')
+  input(type='password', name='user[password]', id='password', placeholder='Password')
   p
-  input(type='submit', name='submit', id='submit')
+  input(type='submit', name='submit', id='submit', value='Sign Up')
