@@ -1,7 +1,7 @@
 Coffee Pot
 ====================
 
-### A boilerplate coffescript app using node.js, coffeescript and mongodb
+### A boilerplate single page app using node.js, coffeescript and mongodb
 ____________________
 
 #### Start Using Me In 5 Easy Steps!

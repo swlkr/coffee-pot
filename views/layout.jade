@@ -7,21 +7,22 @@ html
     header
       #logo
         h1 #{appName}
-      #nav
-        a(href='/signin') 
-          button Sign In
-        a(href='/signup')
-          button Sign Up
+      #nav.signed-out-view
+        button Sign In      
+        button Sign Up
+      #nav.signed-in-view
+        button Sign Out
     .clear
     #content
       .notifications
-        !{flashMessages}
+      .clear
       != body
     .clear
     footer
+      | This is a footer!
   script(type='text/javascript', src='http://code.jquery.com/jquery-1.6.3.min.js')
   script(type='text/javascript', src='/js/underscore-1.1.7.min.js')
-  - if( scripts != null && scripts.length > 0 ) 
-    - each script in scripts 
-      script(type='text/javascript', src='/js/' + script)
+  script(type='text/javascript', src='/js/backbone-0.5.3.min.js')
+  script(type='text/javascript', src='/js/index.js')
+  
     

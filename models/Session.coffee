@@ -1,5 +1,5 @@
 #/**
-#    * Model: LoginToken
+#    * Model: Session
 #    *
 #    * Used for session persistence.
 #    */
@@ -10,16 +10,16 @@ db = mongoose.connect 'mongodb://localhost/coffeepot'
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 
-LoginToken = new Schema
+Session = new Schema
   email  : { type: String, index: true }
   series : { type: String, index: true }
   token  : { type: String, index: true }
 
 
-LoginToken.method 'randomToken', -> 
+Session.method 'randomToken', -> 
   return Math.round (new Date().valueOf() * Math.random()) + ''
 
-LoginToken.pre 'save', (next) ->
+Session.pre 'save', (next) ->
   # Automatically create the tokens
   this.token = this.randomToken()
 
@@ -28,12 +28,12 @@ LoginToken.pre 'save', (next) ->
 
   next()
 
-LoginToken.virtual('id').get -> 
+Session.virtual('id').get -> 
   return this._id.toHexString()
 
-LoginToken.virtual('cookieValue').get -> 
+Session.virtual('cookieValue').get -> 
   return JSON.stringify { email: this.email, token: this.token, series: this.series }
   
-mongoose.model 'LoginToken', LoginToken
+mongoose.model 'Session', Session
 
-module.exports = mongoose.model 'LoginToken'
+module.exports = mongoose.model 'Session'

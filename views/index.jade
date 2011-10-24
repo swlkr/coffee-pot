@@ -1,5 +1,23 @@
-p Welcome!
+#app
+  p Welcome!
 
-#explanation
-  | You finally made it! 
-  | After all that hard work it took to set up. You're here!!
+  #explanation
+    | You finally made it! 
+    | After all that hard work it took to set up. You're here!!
+
+  .signed-out-view
+    #signin-view
+      input(type='text', name='user[email]', id='email', placeholder='Email')
+      br
+      input(type='password', name='user[password]', id='password', placeholder='Password')
+      br
+      button#signin Sign In
+      
+    #signup-view
+      input(type='text', name='user[email]', id='email', placeholder='Email')
+      br
+      input(type='text', name='user[username]', id='username', placeholder='Username')
+      br
+      input(type='password', name='user[password]', id='password', placeholder='Password')
+      br
+      button#signup Sign Up

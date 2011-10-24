@@ -1,19 +1,18 @@
 # Module dependencies.
 express = require 'express'
-User = require './models/User'
-LoginToken = require './models/LoginToken'
 mongoose = require 'mongoose'
 db = mongoose.connect 'mongodb://localhost/coffeepot'
 connect = require 'connect'
 mongoStore = require 'connect-mongodb'
+Session = require './models/Session'
 
 app = module.exports = express.createServer()
 
 # Configuration
+# ------------------------------------------------------
 
 helpers = require './helpers.coffee'
 app.helpers helpers.helpers
-app.dynamicHelpers helpers.dynamicHelpers
 
 mongoStoreConnectionArgs = ->
   dbname: db.connections[0].db.databaseName
@@ -23,13 +22,13 @@ mongoStoreConnectionArgs = ->
 app.configure = ->
   app.set 'views', __dirname + '/views'
   app.set 'view engine', 'jade'
+  app.set 'controllers_path', __dirname + '/controllers'
+  app.set 'controllers', {}
   app.use express.bodyParser()
   app.use express.cookieParser()
-  tmpStore = mongoStore mongoStoreConnectionArgs()
-  tmp =
-    store: tmpStore
+  app.use express.session
+    store: mongoStore mongoStoreConnectionArgs()
     secret: 'coffeepot'
-  app.use express.session tmp
   app.use express.methodOverride()
   stylus = require 'stylus'
   app.use stylus.middleware
@@ -45,150 +44,58 @@ app.configure 'development', ->
   
 app.configure 'production', -> 
   app.use express.errorHandler()
-
-# Global variables
-options =
-  locals :
-    username: null
-    scripts : []
-  layout : 'layout'
-
-# Authenticates from a cookie
-# req - request
-# res - response
-# next is a holder variable for moving on to the next callback in the chain
-authenticateFromLoginToken = (req, res, next) ->
-  cookie = JSON.parse req.cookies.logintoken 
-  json = { email: cookie.email, series: cookie.series, token: cookie.token }
-  LoginToken.findOne json, (err, loginToken) ->
-    if not loginToken
-      res.redirect '/signin'
-      return
-
-    User.findOne { email: loginToken.email }, (err, user) ->
-      if not user
-        res.redirect '/signin'
+  
+handleRequest = (req, res) ->
+  
+  try
+    req.controller = require './controllers/' + req.params.controller
+  catch err
+    req.controller = ''
+    res.send '500 Houston we have a problem'
+    return
+  
+  if req.controller.name != 'sessions' and req.controller.name != 'users'
+    Session.find { token: req.body.token, email: req.body.email, series: req.body.series } , (err, session) ->
+      if not session
+        res.send '401 Unauthorized'
         return
-    
-      if user
-        req.session.user_id = user.id
-        req.session.username = user.username
-        req.currentUser = user
-        loginToken.token = loginToken.randomToken()
-        loginToken.save ->
-          res.cookie 'logintoken', loginToken.cookieValue, { expires: (new Date Date.now() + 2 * 604800000), path: '/' }
-          next()
+  
+  # send some json data back to the client
+  # by delegating to the controllers
+  switch req.method
+    when 'GET'
+      if req.params.controller.substr(-1) == 's'
+        req.controller.list req, res
+      else 
+        req.controller.read req, res
+    when 'POST' then req.controller.create req, res
+    when 'PUT' then req.controller.update req, res
+    when 'DEL' then req.controller.del req, res
 
-# Middleware for user authentication
-# req - request
-# res - response
-# next is a holder variable for moving on to the next callback in the chain
-userRequired = (req, res, next) ->
-  if req.session and req.session.user_id
-    User.findById req.session.user_id, (err, user) ->
-      if user
-        req.currentUser = user
-        res.locals options 
-        next()
-      else
-        res.locals options
-        res.redirect '/signin'
-  else if req.cookies and req.cookies.logintoken
-    authenticateFromLoginToken req, res, next
-  else
-    res.locals options
-    res.redirect '/signin'
-    
-######------------------
-##### Routes
-#####-------------------
+# Routing
+# ------------------------------------------------------
 
 # Index
 # The starting point for the application
-app.get '/', userRequired, (req, res) ->
-  # render the app
-  options.locals.scripts[0] = 'index.js'
-  options.layout = 'application'
-  res.render 'index', options 
-    
-# Sign Up
-app.get '/signup', (req, res) ->
-  if req.currentUser
-    res.redirect '/'
-    return
-    
-  options.layout = 'layout'
-  res.render 'signup', options
+# This is the only html page that gets rendered
+app.get '/', (req, res) ->
+  res.render 'index'
 
-app.post '/signup', (req, res) ->
-  if not req.body.user
-    res.render '/signup'
+app.all '/:controller', (req, res) ->
+  handleRequest req, res
 
-  user = new User req.body.user
-  user.save (response) ->
-    if not response
-      req.session.user_id = user.id
-      loginToken = new LoginToken { email: user.email }
-      loginToken.save ->
-        res.cookie 'logintoken', loginToken.cookieValue, { expires: (new Date Date.now() + 2 * 604800000), path: '/' }
-        res.redirect '/'
-      return
-
-    if response
-      if response.errors and response.errors.email
-        req.flash 'error', 'Something is up with that email address'
-
-      if response.errors and response.errors.username
-        req.flash 'error', 'Something is also up with that username'
-
-      # Handle invalid password
-      if response.message == 'Invalid password'
-        req.flash 'error', 'What\'s up with that password? Could be too weak try one with more than 6 characters.'
-
-      # Handle duplicate username/email
-      if response.message and response.message.contains 'duplicate'
-        property = if response.message.contains 'email' then 'email address' else 'username'
-        req.flash 'error', 'Sorry but that ' + property + ' is taken.'
-
-      res.redirect 'signup'
-
-# Login
-app.get '/signin', (req, res) ->
-  if req.currentUser
-    res.redirect '/'
-    return
-  
-  options.layout = 'layout'
-  res.render 'signin', options
-
-app.post '/signin', (req, res) ->
-  if not req.body.user
-    res.redirect '/signin'
+app.all '/:controller/:id', (req, res, next) ->
+  if req.url.indexOf('.js') != -1 or req.url.indexOf('.css') != -1 or req.url.indexOf('.jpg') != -1 or req.url.indexOf('.png') != -1
+    next() # express static file server
   else
-    # find the user and set the currentUser session variable
-    User.findOne { email: req.body.user.email }, (err, user) ->
-      if user and user.authenticate req.body.user.password
-        req.session.user_id = user.id
-        loginToken = new LoginToken { email: user.email }
-        loginToken.save ->
-          res.cookie 'logintoken', loginToken.cookieValue, { expires: (new Date Date.now() + 2 * 604800000), path: '/' }
-          res.redirect '/'
-      else
-        req.flash 'error', 'Your username or password is incorrect.'
-        res.redirect '/signin'
+    handleRequest req, res
 
-# Logout
-app.get '/signout', userRequired, (req, res) ->
-  if req.session
-    LoginToken.remove { email: req.currentUser.email }, ->
-    res.clearCookie 'logintoken'
-    req.session.destroy ->
-    options.locals.username = null
-
-  res.redirect '/'
-    
-app.get '/404', (req, res) ->
-  res.render '404', options
+app.error (err, req, res) ->
+  if err instanceof NotFound
+    res.send '404 Whatever it is you were trying to find does not exist. Deal with it.'
+  else
+    console.log err
+    res.send '500 Houston we have a problem.'
     
 process.on 'uncaughtException', (err) ->
   console.log 'Caught exception: ' + err

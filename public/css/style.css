@@ -49,9 +49,22 @@ header #logo h1 {
   margin: 0;
   padding: 0;
 }
+/* Footer
+-------------------------------------- */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  color: #fefefe;
+  padding-top: 10px;
+  width: 100%;
+  text-align: center;
+  background-color: #447bd4;
+}
 /* Forms
 -------------------------------------- */
-form {
+#signin-view,
+#signup-view {
   width: 275px;
 }
 input[type="text"],
@@ -76,10 +89,10 @@ input[type="submit"] {
   padding: 10px;
   cursor: pointer;
 }
-#signin-button {
+#signin {
   float: right;
 }
-#signup-button {
+#signup {
   float: right;
 }
 /* Links
