@@ -9,23 +9,10 @@
   };
   _.templateSettings = {
     interpolate: /\{\{(.+?)\}\}/g,
-    evaluate: /\<\%(.+?)\%\>/g
+    evaluate: /\{\%(.+?)\%\}/g
   };
   $(function() {
-    var getCookie, getUrl, urlError;
-    getUrl = function(object) {
-      if (!object && !object.url) {
-        return null;
-      }
-      if (_.isFunction(object.url)) {
-        return object.url();
-      } else {
-        return object.url;
-      }
-    };
-    urlError = function() {
-      throw new Error('A "url" property or function must be specified');
-    };
+    var getCookie;
     getCookie = function(key) {
       var dict, str, _fn, _i, _len, _ref;
       dict = {};
@@ -114,7 +101,7 @@
             userID: ''
           });
           window.session.save({
-            succes: function(model, response) {
+            success: function(model, response) {
               $('.signed-in-view').show();
               return $('.signed-out-view').hide();
             },

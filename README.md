@@ -1,7 +1,7 @@
-Coffee Pot
+coffee-pot
 ====================
 
-### A boilerplate single page app using node.js, coffeescript and mongodb
+### A single page application model view controller framework written in coffeescript
 ____________________
 
 #### Start Using Me In 5 Easy Steps!
@@ -15,8 +15,8 @@ ____________________
 4. Clone this project and get the dependencies:  
 
 		cd ~/Downloads
-		git clone git@github.com:swlkr/Coffee-Pot.git
-		cd ~/Downloads/Coffee-Pot
+		git clone git@github.com:swlkr/coffee-pot.git
+		cd ~/Downloads/coffee-pot
 		npm install
 		coffee app.coffee
 				

@@ -1,29 +1,29 @@
-# Model: User
+# User model
 
 bcrypt = require 'bcrypt'
 mongoose = require 'mongoose'
 db = mongoose.connect 'mongodb://localhost/coffeepot'
-  
+
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 
 # Validators
 validatePresenceOf = (value) ->
-  return value and value.length
-
+  value and value.length
+  
 validateUsernameLength = (value) ->
-  return value.length > 0 and value.length <= 20;
-
+  value.length > 0 and value.length <= 20
+  
 toLower = (v) ->
-  return v.toLowerCase()
+  v.toLowerCase()
 
 isValidEmail = (v) ->
   filter  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
-  return filter.test(v)
-
+  filter.test(v)
+  
 encryptPassword = (pw) ->
-  salt = bcrypt.gen_salt_sync(10)
-  return [bcrypt.encrypt_sync(pw, salt), salt]
+  salt = bcrypt.gen_salt_sync 10
+  [bcrypt.encrypt_sync(pw, salt), salt]
 
 User = new Schema
   owner           : ObjectId

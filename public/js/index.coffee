@@ -3,17 +3,9 @@
 # looking this: <% do_something_in_code_here %>
 _.templateSettings =
   interpolate : /\{\{(.+?)\}\}/g
-  evaluate: /\<\%(.+?)\%\>/g
+  evaluate: /\{\%(.+?)\%\}/g
 
 $ ->
-  
-  getUrl = (object) ->
-    if not object and not object.url
-      return null
-    return if _.isFunction object.url then object.url() else object.url
-  
-  urlError = ->
-    throw new Error 'A "url" property or function must be specified'
   
   getCookie = (key) ->
     dict = {}
@@ -65,6 +57,7 @@ $ ->
       'click #signin'  : 'signin'
       'click #signup'  : 'signup'
       'click #signout' : 'signout'
+      'click #show-signin-view'
     
     initialize: ->
       # try to sign user in with cookie
@@ -77,7 +70,7 @@ $ ->
           username: ''
           userID: ''
         window.session.save
-          succes: (model, response) ->
+          success: (model, response) ->
             $('.signed-in-view').show()
             $('.signed-out-view').hide()
             #window.session.set('sessionID', data.sessionID)
@@ -116,3 +109,4 @@ $ ->
       # get the current user and send it to the server to be destroyed
             
   window.App = new AppView
+  

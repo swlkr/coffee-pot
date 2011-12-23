@@ -1,6 +1,6 @@
-form(method='POST', action='/signin')
+#signin-view.signed-out-view
   input(type='text', name='user[email]', id='email', placeholder='Email')
   br
   input(type='password', name='user[password]', id='password', placeholder='Password')
   br
-  input(type='submit', name='submit', id='signin-button', value='Sign In')
+  button#signin Sign In

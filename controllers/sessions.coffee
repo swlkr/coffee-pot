@@ -1,9 +1,6 @@
 # Sessions Controller
 
 Session = require '../models/Session'
-User = require '../models/User'
-
-exports.name = 'sessions'  
 
 exports.create = (req, res) ->
   if not req.body.email and not req.body.password

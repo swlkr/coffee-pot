@@ -3,8 +3,6 @@
 User = require '../models/User'
 Session = require '../models/Session'
 
-exports.name = 'users'
-  
 exports.create = (req, res) ->
   # create a new session (log in)
   if not req.body.user
