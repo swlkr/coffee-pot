@@ -1,7 +1,7 @@
 coffee-pot
 ====================
 
-### A single page application model view controller framework written in coffeescript
+### A single page application model view controller starting point written in coffeescript
 ____________________
 
 #### Start Using Me In 5 Easy Steps!

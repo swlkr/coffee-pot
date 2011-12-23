@@ -1,0 +1,22 @@
+!!! 5
+html
+  head
+    title Coffee Pot
+    link(rel='stylesheet', href='/css/style.css')
+  body
+    header
+      h1#logo 
+        a(href='/') Coffee Pot
+      #menu
+        button#show-signin-view.signedout-view Sign In
+        button#show-signup-view.signedout-view Sign Up
+        button#signout.signedin-view Sign Out
+    .clear
+    #content
+      .notifications
+      != body
+    script(type='text/javascript', src='/js/libs/jquery-1.7.1.min.js')
+    script(type='text/javascript', src='/js/libs/jquery.cookie.js')
+    script(type='text/javascript', src='/js/libs/underscore-1.2.1.min.js')
+    script(type='text/javascript', src='/js/libs/backbone-0.5.3.min.js')
+    script(type='text/javascript', src='/js/index.js')

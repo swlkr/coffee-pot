@@ -1,11 +1,11 @@
 { "name" : "coffee-pot",
-	"version" : "0.0.1",
+	"version" : "0.5.0",
 	"dependencies": {
 		"jade": ">= 0.16.2",
 		"mongoose": ">= 2.3.9",
 		"bcrypt" : ">= 0.3.1",
-		"stylus" : "0.15.2",
-		"connect" : "1.7.0",
-		"connect-mongodb" : "1.0.0"
+		"stylus" : ">= 0.15.2",
+		"connect" : ">= 1.7.0",
+		"connect-mongodb" : ">= 1.0.0"
 	}
 }

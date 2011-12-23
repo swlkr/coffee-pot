@@ -1,115 +1,75 @@
-/* Variables
-------------------------------------- */
-button-background-color = #447BD4
+// Reset
+// ... It's blank, fill this in
 
-/* HTML, BODY
-------------------------------------- */
+/********************
+  Base
+ ********************/
 html
-  font-size 100%
-  overflow-y scroll
-  -webkit-text-size-adjust 100%
-  -ms-text-size-adjust 100%
-  background-color #FEFEFE
-  
 body
-  margin: 0
-  line-height: 1.231
-  margin-left 5px
+  font-family 'Lucida Grande', Helvetica, sans-serif
+  margin 0
+  padding 0
 
-body, button, input, select, textarea
-  font 16px "Lucida Grande", Helvetica, sans-serif
-  
-/* Header
--------------------------------------- */
-header
-  #nav
-    float right
-    a:visited, a:hover, a
-      color #FEFEFE
-    button
-      cursor pointer
-  #logo
-    h1
-      margin 0
-      padding 0
-    float left
-
-/* Footer
--------------------------------------- */
-footer
-  position fixed
-  bottom 0
-  left 0
-  color #FEFEFE
-  padding-top 10px
-  width 100%
-  text-align center
-  background-color button-background-color
-
-/* Forms
--------------------------------------- */
-#signin-view, #signup-view
-  width 275px
-
-input[type='text'], input[type='password'], textarea
-  border-radius 3px
-  border 1px solid #777
-  width 250px
-  padding 10px
-  margin-top 5px
-  margin-bottom 5px
-  -moz-box-shadow inset 0 0 2px #777
-  -webkit-box-shadow inset 0 0 2px #777
-  box-shadow inset 0 0 2px #777
-
-button, input[type='submit']
-  border-radius 3px
-  background-color button-background-color
-  border 1px solid button-background-color
-  color #FFF
-  padding 10px
-  cursor pointer
-  
-#signin
-  float right
-  
-#signup
-  float right
-
-/* Links
--------------------------------------- */
-
-a
-  color #00F
-  text-decoration none
-a:visited
-  color #551a8b
-a:hover
-  color #06e
-a:focus
-  outline thin dotted
-
-a:hover, a:active
-  outline 0
-
-/* Lists
--------------------------------------- */
 li
   list-style-type none
+  font-size 19px
 
 ul
   margin-left 0
   padding-left 0
 
-/* Notifications
------------------------------------------ */
-.Error
-  color #FF0000
+a, a:hover, a:visited, a:link
+  color #000
+  text-decoration none
 
-.Success
-  color #00FF00
-  
-/* CSS Oddities
------------------------------------------ */
+input[type=text], input[type=password], textarea
+  padding 9px
+  border solid 1px #E5E5E5
+  font normal 13px/100% Verdana, Tahoma, sans-serif
+  outline 0
+  width 200px
+  background #FFFFFF
+
+textarea
+  width 350px
+  max-width 350px
+  height 50px
+  line-height 100%
+
+input[type=text]:hover, input[type=password]:hover, textarea:hover, input[type=text]:focus, input[type=password]:focus, textarea:focus
+  border-color #C9C9C9
+
+/********************
+ Header
+*********************/
+header
+  height 50px
+  width 100%
+  background-color #333
+  #logo
+    padding-top 10px
+    float left
+    margin-top -7px
+    a
+      color #FEFEFE
+      margin-left 4px
+  #menu
+    padding-top 13px
+    float right
+    button
+      margin-left 10px
+      
+/********************
+ Application
+*********************/
+      
+/********************
+ Footer
+*********************/
+
+// Util
 .clear
   clear both
+
+.hide
+  display none

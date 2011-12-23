@@ -1,34 +1,35 @@
-# User model
+# Model: User
 
 bcrypt = require 'bcrypt'
 mongoose = require 'mongoose'
-db = mongoose.connect 'mongodb://localhost/coffeepot'
-
+db = mongoose.connect 'mongodb://localhost/coffee-pot'
+  
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 
 # Validators
 validatePresenceOf = (value) ->
-  value and value.length
-  
+  return value and value.length
+
 validateUsernameLength = (value) ->
-  value.length > 0 and value.length <= 20
-  
+  return value.length > 0 and value.length <= 20;
+
 toLower = (v) ->
-  v.toLowerCase()
+  return v.toLowerCase()
 
 isValidEmail = (v) ->
   filter  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
-  filter.test(v)
-  
+  return filter.test(v)
+
 encryptPassword = (pw) ->
-  salt = bcrypt.gen_salt_sync 10
-  [bcrypt.encrypt_sync(pw, salt), salt]
+  salt = bcrypt.gen_salt_sync(10)
+  return [bcrypt.encrypt_sync(pw, salt), salt]
 
 User = new Schema
   owner           : ObjectId
-  email           : { type: String, required: true, set: toLower, validate: [isValidEmail, 'Invalid email'], unique: true } 
-  username        : { type: String, required: true, unique: true }
+  email           : { type: String, required: true, set: toLower, validate: [isValidEmail, 'Invalid email'] } 
+  username        : { type: String, required: true }
+  admin           : { type: Boolean, required: true }
   hashed_password : { type: String, required: true }
   salt            : { type: String, required: true }
   created         : { type: Date }
@@ -45,6 +46,9 @@ User.virtual('password').set (password) ->
     
 User.virtual('password').get -> 
   return this._password
+  
+User.method 'randomNumber', -> 
+  return Math.round (new Date().valueOf() * Math.random()) + ''
 
 User.method 'authenticate', (plainText) ->
   return bcrypt.compare_sync plainText, this.hashed_password

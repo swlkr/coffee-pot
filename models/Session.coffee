@@ -5,7 +5,7 @@
 #    */
 
 mongoose = require 'mongoose'
-db = mongoose.connect 'mongodb://localhost/coffeepot'
+db = mongoose.connect 'mongodb://localhost/coffee-pot'
 
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId

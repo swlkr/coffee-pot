@@ -1,36 +1,50 @@
-# Sessions Controller
+# Sessions Controller. Now with more REST!
 
 Session = require '../models/Session'
+User = require '../models/User'
 
+# POST a new session
 exports.create = (req, res) ->
   if not req.body.email and not req.body.password
-    res.send 'Your json object needs to look like this: { email: "email", password: "password" }'
+    res.send 'Come on now, there\'s no email or password!', 401
   else
     User.findOne { email: req.body.email }, (err, user) ->
       if user and user.authenticate req.body.password
-        req.currentUser = user
+        # clear any old sessions
+        # Session.remove { email: user.email }, ->
+          
         session = new Session { email: user.email }
         session.save ->
-          res.cookie 'session', session.cookieValue, { expires: (new Date Date.now() + 2 * 604800000), path: '/' }
-          res.send
-            sessionID: session.id
-            userID: user.id
-            username: user.username
-            password: ''
-          return
+          #res.cookie 'session', session.cookieValue, { expires: (new Date Date.now() + 2 * 604800000), path: '/' }
+          res.send { id: session.id }
       else
         res.send
           notification:
             type: 'Error'
-            message: 'Could not find that user in the datastore'
-        return
+            message: 'There\'s a glitch in the matrix: you don\'t exist.\nThere\'s a glitch in the matrix: you don\'t exist.'
 
+# GET a session
 exports.read = (req, res) ->
-  Session.findById req.params.id, (err, session) ->
-    res.send session
+  if req.currentSession
+    res.send { id: req.currentSession.id }
+    return
+  
+  if not req.headers['x-csrf-token']
+    res.send null
+    return
+  
+  sessionID = (JSON.parse req.headers['x-csrf-token']).id
+  
+  if not sessionID
+    res.send null
+    return
+    
+  Session.findById sessionID, (err, session) ->
+    res.send { id: session.id }
 
+# DELete a session
 exports.del = (req, res) ->
-  Session.remove { email: req.currentUser.email }, ->
+  Session.remove { _id: req.currentSession.id }, ->
     res.clearCookie 'session'
     req.session.destroy ->
-      res.send ''
+      res.send null

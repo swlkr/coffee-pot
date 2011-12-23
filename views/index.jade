@@ -1,33 +1,32 @@
-!!! 5
-html
-  head
-    title= appName
-    link(rel='stylesheet', href='/css/style.css')
-  body
-    header
-      #logo
-        h1 #{appName}
-      #nav.signed-out-view
-        button#show-signin-view Sign In      
-        button#show-signup-view Sign Up
-      #nav.signed-in-view
-        button Sign Out
-    .clear
-    #content
-      .notifications
-      .clear
-      #app
-        p Welcome!
+#app-view
+  p Welcome to Coffee Pot!
 
-        #explanation
-          | You finally made it! 
-          | After all that hard work it took to set up. You're here!!
-    .clear
-    footer
-      | This is a footer!
-  script(type='text/javascript', src='http://code.jquery.com/jquery-1.6.3.min.js')
-  script(type='text/javascript', src='/js/underscore-1.1.7.min.js')
-  script(type='text/javascript', src='/js/backbone-0.5.3.min.js')
-  script(type='text/javascript', src='/js/index.js')
-  
-    
+#signin-view.signedout-view
+  h1 Sign In
+  #signin-form
+    | Email
+    br
+    input(type='text', name='email')
+    br
+    | Password
+    br
+    input(type='password', name='password')
+    p
+    button.minimal#signin Sign In
+
+#signup-view.signedout-view
+  h1 Sign Up
+  #signup-form
+    | Email
+    br
+    input(type='text', name='email')
+    br
+    | Username
+    br
+    input(type='text', name='username')
+    br
+    | Password
+    br
+    input(type='password', name='password')
+    p
+    button.minimal#signup Sign Up
