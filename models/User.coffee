@@ -51,7 +51,7 @@ User.method 'randomNumber', ->
   return Math.round (new Date().valueOf() * Math.random()) + ''
 
 User.method 'authenticate', (plainText) ->
-  return bcrypt.compare_sync plainText, this.hashed_password
+  return bcrypt.compareSync plainText, this.hashed_password
 
 User.pre 'save', (next) ->
   if not validatePresenceOf this.password 

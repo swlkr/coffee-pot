@@ -59,15 +59,12 @@ $ ->
       'click #signup'           : 'signup'
       'click #signout'          : 'signout'
       'keypress #signin-view input[name="password"]' : 'signinOnEnter'
+      'keypress #signin-view input[name="email"]' : 'signinOnEnter'
       'click #show-signin-view' : 'showSigninView'
       'click #show-signup-view' : 'showSignupView'
     
     initialize: ->
-      
-      # hide the stuff!
-      $('#signup-view, .signedin-view').hide()
-      $('#signin-view').show()
-      
+            
       sessionCookie = $.cookie 'session'
       if sessionCookie
         sessionCookie = JSON.parse sessionCookie
@@ -78,7 +75,8 @@ $ ->
         success: (model, res) ->
           if res
             $('.signedin-view').show()
-            $('.signedout-view').hide()
+          else
+            $('#signin-view, #show-signin-view, #show-signup-view').show()
         error: (model, res) ->
   
     showSigninView: ->
@@ -91,13 +89,14 @@ $ ->
   
     signin: ->
       # create a new session
+      $('.notifications').html('')
       session.save { email: $('#signin-view input[name="email"]').val(), password: $('#signin-view input[name="password"]').val() }
         success: (model, res) ->
-          if res
-            $.cookie 'session', JSON.stringify { id: res.id }, { expires: 30, path: '/' }
-            $('.signedout-view').hide()
-            $('.signedin-view').show()
+          $.cookie 'session', JSON.stringify { id: res.id }, { expires: 30, path: '/' }
+          $('.signedout-view').hide()
+          $('.signedin-view').show()
         error: (model, res) ->
+          $('.notifications').addClass('error').html res.responseText
           
     signinOnEnter: (e) ->
       if e.keyCode == 13

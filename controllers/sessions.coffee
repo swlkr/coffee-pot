@@ -18,10 +18,7 @@ exports.create = (req, res) ->
           #res.cookie 'session', session.cookieValue, { expires: (new Date Date.now() + 2 * 604800000), path: '/' }
           res.send { id: session.id }
       else
-        res.send
-          notification:
-            type: 'Error'
-            message: 'There\'s a glitch in the matrix: you don\'t exist.\nThere\'s a glitch in the matrix: you don\'t exist.'
+        res.send 'There\'s a glitch in the matrix: you don\'t exist.\nThere\'s a glitch in the matrix: you don\'t exist.', 401
 
 # GET a session
 exports.read = (req, res) ->

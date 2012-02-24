@@ -108,14 +108,13 @@
         'click #signup': 'signup',
         'click #signout': 'signout',
         'keypress #signin-view input[name="password"]': 'signinOnEnter',
+        'keypress #signin-view input[name="email"]': 'signinOnEnter',
         'click #show-signin-view': 'showSigninView',
         'click #show-signup-view': 'showSignupView'
       };
 
       AppView.prototype.initialize = function() {
         var sessionCookie;
-        $('#signup-view, .signedin-view').hide();
-        $('#signin-view').show();
         sessionCookie = $.cookie('session');
         if (sessionCookie) {
           sessionCookie = JSON.parse(sessionCookie);
@@ -126,8 +125,9 @@
         return session.fetch({
           success: function(model, res) {
             if (res) {
-              $('.signedin-view').show();
-              return $('.signedout-view').hide();
+              return $('.signedin-view').show();
+            } else {
+              return $('#signin-view, #show-signin-view, #show-signup-view').show();
             }
           },
           error: function(model, res) {}
@@ -145,23 +145,24 @@
       };
 
       AppView.prototype.signin = function() {
+        $('.notifications').html('');
         return session.save({
           email: $('#signin-view input[name="email"]').val(),
           password: $('#signin-view input[name="password"]').val()
         }, {
           success: function(model, res) {
-            if (res) {
-              $.cookie('session', JSON.stringify({
-                id: res.id
-              }, {
-                expires: 30,
-                path: '/'
-              }));
-              $('.signedout-view').hide();
-              return $('.signedin-view').show();
-            }
+            $.cookie('session', JSON.stringify({
+              id: res.id
+            }, {
+              expires: 30,
+              path: '/'
+            }));
+            $('.signedout-view').hide();
+            return $('.signedin-view').show();
           },
-          error: function(model, res) {}
+          error: function(model, res) {
+            return $('.notifications').addClass('error').html(res.responseText);
+          }
         });
       };
 

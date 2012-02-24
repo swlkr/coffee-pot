@@ -81,9 +81,21 @@ header #menu button {
 /********************
  Footer
 *********************/
+/********************
+ Notifications
+*********************/
+.error {
+  color: #e00;
+}
+.success {
+  color: #0e0;
+}
 .clear {
   clear: both;
 }
 .hide {
   display: none;
+}
+.invisible {
+  visibility: hidden;
 }
