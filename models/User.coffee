@@ -22,8 +22,8 @@ isValidEmail = (v) ->
   return filter.test(v)
 
 encryptPassword = (pw) ->
-  salt = bcrypt.gen_salt_sync(10)
-  return [bcrypt.encrypt_sync(pw, salt), salt]
+  salt = bcrypt.genSaltSync(10)
+  return [bcrypt.hashSync(pw, salt), salt]
 
 User = new Schema
   owner           : ObjectId

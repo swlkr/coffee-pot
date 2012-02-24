@@ -6,6 +6,7 @@
 		"bcrypt" : ">= 0.3.1",
 		"stylus" : ">= 0.15.2",
 		"connect" : ">= 1.7.0",
-		"connect-mongodb" : ">= 1.0.0"
+		"connect-mongodb" : ">= 1.0.0",
+		"express" : ">= 2.5.2"
 	}
 }
