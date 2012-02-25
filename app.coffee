@@ -74,7 +74,7 @@ RESTfulRouting = (controller, req, res) ->
           req.currentUser = user
           RESTfulRouter controller, req, res
       else
-        res.send null
+        res.send 'That\'s classified information', 401
         return
   else
     res.send null

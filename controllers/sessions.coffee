@@ -9,16 +9,20 @@ exports.create = (req, res) ->
     res.send 'Come on now, there\'s no email or password!', 401
   else
     User.findOne { email: req.body.email }, (err, user) ->
-      if user and user.authenticate req.body.password
-        # clear any old sessions
-        # Session.remove { email: user.email }, ->
-          
-        session = new Session { email: user.email }
-        session.save ->
-          #res.cookie 'session', session.cookieValue, { expires: (new Date Date.now() + 2 * 604800000), path: '/' }
-          res.send { id: session.id }
-      else
+      if not user
         res.send 'There\'s a glitch in the matrix: you don\'t exist.\nThere\'s a glitch in the matrix: you don\'t exist.', 401
+        return
+      
+      if not user.authenticate req.body.password
+        res.send 'Access denied. Your password is incorrect.', 401
+        return
+        
+      # clear any old sessions
+      # Session.remove { email: user.email }, ->
+      session = new Session { email: user.email }
+      session.save ->
+        #res.cookie 'session', session.cookieValue, { expires: (new Date Date.now() + 2 * 604800000), path: '/' }
+        res.send { id: session.id }
 
 # GET a session
 exports.read = (req, res) ->
