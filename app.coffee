@@ -14,7 +14,7 @@ User = require './models/User'
 mongoStoreConnectionArgs = ->
   { dbname: db.connections[0].db.databaseName, host: db.connections[0].db.serverConfig.host, port: db.connections[0].db.serverConfig.port }
 
-app.configure = ->
+app.configure ->
   app.set 'views', __dirname + '/views'
   app.set 'view engine', 'jade'
   app.use express.bodyParser()
