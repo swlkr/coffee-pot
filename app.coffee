@@ -1,10 +1,10 @@
 # Deps
 express = require 'express'
 mongoose = require 'mongoose'
-db = mongoose.connect 'mongodb://localhost/coffee-pot'
+db = mongoose.createConnection 'mongodb://localhost/coffee-pot'
 connect = require 'connect'
 mongoStore = require 'connect-mongodb'
-app = module.exports = express.createServer()
+app = module.exports = express()
 sessions = require './controllers/Sessions.coffee'
 users = require './controllers/Users.coffee'
 Session = require './models/Session'
@@ -29,12 +29,12 @@ app.configure ->
   app.use app.router
   app.use express.static __dirname + '/public'
   app.use express.favicon __dirname + '/public/img/favicon.ico'
-  
+
 app.configure 'development', ->
   app.use express.errorHandler
     dumpExceptions: true
     showStack: true
-  
+
 app.configure 'production', -> 
   app.use express.errorHandler()
 
@@ -59,16 +59,16 @@ RESTfulRouting = (controller, req, res) ->
   if req.url == '/sessions' or (req.url == '/users' and req.method = 'POST')
     RESTfulRouter controller, req, res
     return
-  
+
   # otherwise try to log the user in
   # 1. check to see if the user has a cookie
   if req.headers['x-csrf-token'] and (JSON.parse req.headers['x-csrf-token']).id  
     # 2. extract the session id from the cookie
     sessionID = (JSON.parse req.headers['x-csrf-token']).id
-    
+
     # 3. Match the sessionID to a session in the datastore
     Session.findById sessionID, (err, session) ->
-      if session      
+      if session
         User.findOne { email: session.email }, (err, user) ->
           req.currentSession = session
           req.currentUser = user
@@ -86,14 +86,14 @@ app.get '/', (req, res) ->
 # Sessions routes
 app.all '/sessions', (req, res) ->
   RESTfulRouting sessions, req, res
-  
+
 app.all '/sessions/:id', (req, res) ->
   RESTfulRouting sessions, req, res
-  
+
 # Users routes
 app.all '/users', (req, res) ->
   RESTfulRouting users, req, res
-  
+
 app.all '/users/:id', (req, res) ->
   RESTfulRouting users, req, res
 
