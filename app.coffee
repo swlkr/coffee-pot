@@ -5,10 +5,10 @@ db = mongoose.createConnection 'mongodb://localhost/coffee-pot'
 connect = require 'connect'
 mongoStore = require 'connect-mongodb'
 app = module.exports = express()
-sessions = require './controllers/Sessions.coffee'
-users = require './controllers/Users.coffee'
-Session = require './models/Session'
-User = require './models/User'
+sessions = require './controllers/sessions.coffee'
+users = require './controllers/users.coffee'
+Session = require './models/session'
+User = require './models/user'
 
 # Configuration
 mongoStoreConnectionArgs = ->
